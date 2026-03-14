@@ -1,0 +1,267 @@
+FIX AND IMPROVE THE EXISTING FLASK WEBSITE
+
+Modify the current project. Do NOT rebuild the project and do NOT change the Flask + Bootstrap architecture.
+
+---
+
+1. REMOVE THE THREE-DOT MENU
+
+The website currently uses a 3-dot navigation menu with a heavy background reflection/overlay.
+
+Fix this:
+
+• Remove the 3-dot menu completely
+• Remove any dark overlay or blur background
+• Navigation must always be visible
+
+Replace it with a **clean Bootstrap header taskbar**.
+
+---
+
+2. CREATE A PERMANENT HEADER NAVIGATION
+
+Edit **templates/base.html** and create a proper Bootstrap navbar.
+
+Navbar items:
+
+Home
+Rooms
+Gallery
+Experiences
+Contact
+
+Example structure:
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<div class="container">
+
+<a class="navbar-brand d-flex align-items-center" href="/">
+<img src="{{ url_for('static', filename='images/cloudvista-logo.png') }}" height="40" class="me-2">
+CloudVista
+</a>
+
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+<span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse navbar-collapse" id="navbarNav">
+<ul class="navbar-nav ms-auto">
+
+<li class="nav-item">
+<a class="nav-link" href="{{ url_for('index') }}">Home</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="{{ url_for('rooms') }}">Rooms</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="{{ url_for('gallery') }}">Gallery</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="{{ url_for('experiences') }}">Experiences</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
+</li>
+
+</ul>
+</div>
+
+</div>
+</nav>
+
+Ensure navbar works correctly on desktop and mobile.
+
+---
+
+3. EACH PAGE MUST OPEN ON A SEPARATE LINK
+
+Currently pages load inside one section. Fix routing so every page opens independently.
+
+Add routes in **app.py**:
+
+@app.route("/")
+def index():
+return render_template("index.html")
+
+@app.route("/rooms")
+def rooms():
+return render_template("rooms.html")
+
+@app.route("/gallery")
+def gallery():
+return render_template("gallery.html")
+
+@app.route("/experiences")
+def experiences():
+return render_template("experiences.html")
+
+@app.route("/contact")
+def contact():
+return render_template("contact.html")
+
+---
+
+4. FIX WEBSITE NAME
+
+Remove ALL references to:
+
+Artist Rally Homestay
+Artistic Rally
+Develdhar Artistic
+
+Replace everywhere with:
+
+CloudVista
+
+Update:
+
+Page titles
+Navbar brand
+Footer text
+Homepage headings
+
+---
+
+5. ADD CLOUDVISTA LOGO
+
+Create a simple black minimal logo named:
+
+static/images/cloudvista-logo.png
+
+Design idea:
+
+• black theme
+• cloud + mountain icon
+• modern minimal style
+• text: CloudVista
+
+Use it inside the navbar.
+
+---
+
+6. ADD ACTIVITY DISCLAIMER
+
+The website must clearly state that the homestay **only provides accommodation**.
+
+Add an “Important Information” section on:
+
+• Rooms page
+• Experiences page
+• Booking section
+
+Text to display:
+
+Homestay booking includes room stay only.
+No car or transport service is included.
+No guide service is provided.
+Rafting, bungee jumping, trekking, or camping are NOT included in the homestay package.
+CloudVista Homestay does NOT provide passes or tickets for rafting or adventure activities.
+Guests must arrange these activities separately with local operators.
+
+Use Bootstrap alert:
+
+<div class="alert alert-warning mt-4">
+<h5>Important Information</h5>
+<p>
+Homestay booking includes room stay only. Transport, guide services,
+rafting passes, bungee jumping, trekking, or any adventure activity
+are NOT included in the booking.
+</p>
+</div>
+
+---
+
+7. CREATE TERMS & CONDITIONS PAGE
+
+Create:
+
+templates/terms.html
+
+Use the following content:
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5 pt-5">
+
+<h2 class="mb-4">Terms & Conditions</h2>
+
+<h5>1. Booking Policy</h5>
+<p>
+Booking at CloudVista Homestay confirms accommodation only.
+</p>
+
+<h5>2. Activities Disclaimer</h5>
+<p>
+Adventure activities such as rafting, bungee jumping, trekking,
+or camping are NOT included with the homestay booking.
+</p>
+
+<h5>3. Transport Policy</h5>
+<p>
+No car, taxi, or transport service is included with the booking.
+</p>
+
+<h5>4. Guide Services</h5>
+<p>
+The homestay does not provide trekking or sightseeing guides.
+</p>
+
+<h5>5. Adventure Activities</h5>
+<p>
+CloudVista Homestay does not provide rafting passes or bookings
+for adventure activities.
+</p>
+
+<h5>6. Liability</h5>
+<p>
+The homestay is not responsible for incidents related to
+third-party adventure activities.
+</p>
+
+<h5>7. Contact</h5>
+<p>
+Phone: +91 8057315607  
+Email: shailendr07@gmail.com  
+Location: Narendra Nagar, Rishikesh
+</p>
+
+</div>
+
+{% endblock %}
+
+---
+
+8. ADD TERMS LINK IN FOOTER
+
+Edit **base.html footer**:
+
+<footer class="bg-dark text-white text-center py-4 mt-5">
+<div class="container">
+
+<p>© 2026 CloudVista Homestay</p>
+
+<a href="{{ url_for('terms') }}" class="text-light text-decoration-none">
+Terms & Conditions
+</a>
+
+</div>
+</footer>
+
+---
+
+FINAL RESULT REQUIRED
+
+• No 3-dot menu
+• Clean header taskbar
+• Each page opens on its own URL
+• Brand name CloudVista everywhere
+• Black minimal logo added
+• Clear disclaimer about activities
+• Terms & Conditions page added
+• Footer link working

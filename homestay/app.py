@@ -187,6 +187,11 @@ def experiences():
     return render_template('experiences.html', experiences=all_experiences)
 
 
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
+
+
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     rooms_list = Room.query.filter_by(available=True).all()

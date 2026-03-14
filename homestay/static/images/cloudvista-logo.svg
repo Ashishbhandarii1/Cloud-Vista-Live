@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <!-- Mountain shape -->
+  <polygon points="20,50 42,18 64,50" fill="#ffffff" opacity="0.9"/>
+  <polygon points="36,50 58,22 80,50" fill="#ffffff" opacity="0.7"/>
+  <!-- Cloud -->
+  <ellipse cx="55" cy="14" rx="10" ry="7" fill="#ffffff"/>
+  <ellipse cx="65" cy="12" rx="8" ry="6" fill="#ffffff"/>
+  <ellipse cx="47" cy="15" rx="7" ry="5" fill="#ffffff"/>
+  <!-- Text -->
+  <text x="90" y="38" font-family="Georgia, serif" font-size="22" font-weight="bold" fill="#ffffff" letter-spacing="1">CloudVista</text>
+</svg>

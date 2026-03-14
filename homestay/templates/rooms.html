@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Rooms & Accommodation - Artist Rally Homestay{% endblock %}
+{% block title %}Rooms & Accommodation - CloudVista Homestay{% endblock %}
 
 {% block content %}
 <section class="page-hero text-center">
@@ -12,6 +12,17 @@
 
 <section class="py-5">
     <div class="container py-4">
+
+        <div class="alert alert-warning border-warning shadow-sm mb-5" role="alert">
+            <h5 class="alert-heading"><i class="bi bi-exclamation-triangle-fill me-2"></i>Important Information</h5>
+            <p class="mb-0">
+                Homestay booking includes <strong>room stay only</strong>. Transport, guide services,
+                rafting passes, bungee jumping, trekking, or any adventure activity
+                are <strong>NOT included</strong> in the booking. Guests must arrange these activities
+                separately with local operators.
+            </p>
+        </div>
+
         {% if rooms %}
         <div class="row g-4">
             {% for room in rooms %}

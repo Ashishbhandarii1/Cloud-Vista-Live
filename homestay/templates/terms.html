@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}Terms & Conditions - CloudVista Homestay{% endblock %}
+
+{% block content %}
+<section class="page-hero text-center">
+    <div class="container">
+        <div class="section-subtitle text-white mb-2">Legal</div>
+        <h1 class="display-5 fw-bold">Terms &amp; Conditions</h1>
+        <p class="lead opacity-75 mt-2">Please read these terms carefully before booking</p>
+    </div>
+</section>
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-4 p-4 p-md-5">
+
+                <h5 class="mt-2">1. Booking Policy</h5>
+                <p class="text-muted">
+                    Booking at CloudVista Homestay confirms accommodation only. All room bookings are subject to availability.
+                    A booking confirmation will be shared via phone or email after we verify availability.
+                </p>
+
+                <hr class="my-4">
+
+                <h5>2. Activities Disclaimer</h5>
+                <p class="text-muted">
+                    Adventure activities such as rafting, bungee jumping, trekking, or camping are
+                    <strong>NOT included</strong> with the homestay booking. Guests wishing to participate in
+                    adventure activities must contact and book directly with local operators in Rishikesh.
+                </p>
+
+                <hr class="my-4">
+
+                <h5>3. Transport Policy</h5>
+                <p class="text-muted">
+                    No car, taxi, or transport service is included with the booking.
+                    CloudVista Homestay does not arrange or provide any transportation service.
+                    Guests must arrange their own transport to and from the homestay.
+                </p>
+
+                <hr class="my-4">
+
+                <h5>4. Guide Services</h5>
+                <p class="text-muted">
+                    The homestay does not provide trekking or sightseeing guides. Guests requiring
+                    a local guide must arrange this independently through local tour operators in Rishikesh or Narendra Nagar.
+                </p>
+
+                <hr class="my-4">
+
+                <h5>5. Adventure Activities</h5>
+                <p class="text-muted">
+                    CloudVista Homestay does not provide rafting passes, bungee jump tickets, or bookings
+                    for any adventure activities. All adventure activities must be booked separately
+                    with licensed local operators. CloudVista Homestay holds no affiliation with
+                    any adventure activity provider.
+                </p>
+
+                <hr class="my-4">
+
+                <h5>6. Liability</h5>
+                <p class="text-muted">
+                    The homestay is not responsible for any incidents, injuries, or losses related to
+                    third-party adventure activities, transportation, or guide services arranged independently by guests.
+                    Guests participate in any adventure activity entirely at their own risk.
+                </p>
+
+                <hr class="my-4">
+
+                <h5>7. Cancellation &amp; Refund</h5>
+                <p class="text-muted">
+                    Cancellations must be communicated at least 48 hours prior to the check-in date.
+                    Refund terms will be discussed at the time of booking confirmation.
+                </p>
+
+                <hr class="my-4">
+
+                <h5>8. Contact</h5>
+                <p class="text-muted mb-0">
+                    For any queries or clarifications, please reach us at:<br>
+                    <i class="bi bi-telephone-fill me-2 text-success"></i><a href="tel:+918057315607">+91 8057315607</a><br>
+                    <i class="bi bi-envelope-fill me-2 text-success"></i><a href="mailto:shailendr07@gmail.com">shailendr07@gmail.com</a><br>
+                    <i class="bi bi-geo-alt-fill me-2 text-success"></i>Narendra Nagar, Rishikesh, Uttarakhand
+                </p>
+
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{{ url_for('index') }}" class="btn btn-outline-secondary me-2">
+                    <i class="bi bi-house me-1"></i>Back to Home
+                </a>
+                <a href="{{ url_for('contact') }}" class="btn btn-primary">
+                    <i class="bi bi-calendar-check me-1"></i>Book a Room
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
