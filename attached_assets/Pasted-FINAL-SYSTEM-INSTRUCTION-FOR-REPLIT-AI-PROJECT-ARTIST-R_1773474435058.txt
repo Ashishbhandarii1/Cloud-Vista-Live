@@ -1,0 +1,307 @@
+FINAL SYSTEM INSTRUCTION FOR REPLIT AI
+
+PROJECT: ARTIST RALLY HOMESTAY WEBSITE
+
+CRITICAL ARCHITECTURE RULES
+
+1. Immediately DELETE any of the following if generated:
+   .ts
+   .tsx
+   package.json
+   node_modules
+   vite.config.ts
+   tsconfig.json
+
+2. DO NOT use:
+   React
+   Next.js
+   Vite
+   Tailwind via NPM
+
+3. FRONTEND FRAMEWORK
+   Use Bootstrap 5 via CDN only.
+
+4. BACKEND
+   Use a pure Python Flask project.
+
+5. ENTRY POINT
+   The application must run from app.py.
+
+---
+
+DIRECTORY STRUCTURE (MANDATORY)
+
+The project must be organized EXACTLY like this:
+
+/ (root)
+├── app.py
+├── config.py
+├── database.sql
+├── requirements.txt
+│
+├── static/
+│   ├── css/style.css
+│   ├── js/main.js
+│   ├── images/
+│   └── uploads/
+│
+└── templates/
+├── base.html
+├── index.html
+├── rooms.html
+├── gallery.html
+├── experiences.html
+├── contact.html
+└── admin/
+├── login.html
+├── dashboard.html
+├── rooms_manage.html
+├── gallery_manage.html
+└── reviews_manage.html
+
+Do NOT create folders such as:
+src
+frontend
+dist
+build
+
+---
+
+BACKEND SPECIFICATIONS
+
+Use the following stack:
+
+Flask
+Flask-SQLAlchemy
+Flask-Login
+mysql-connector-python
+Werkzeug
+
+Create an init_db() function in app.py that creates all database tables if they do not exist.
+
+---
+
+DATABASE
+
+Use MySQL.
+
+Required tables:
+
+admins
+rooms
+gallery
+reviews
+booking_requests
+experiences
+admin_settings
+
+---
+
+ADMIN LOGIN
+
+Admin credentials must be:
+
+username: shailendr07
+password: Cloudvista@shailendra
+
+All routes starting with /admin-panel must be protected using a session check or login_required decorator.
+
+If not logged in, redirect user to:
+
+/admin/login
+
+---
+
+IMAGE UPLOAD SYSTEM
+
+Admin must be able to upload:
+
+Room photos
+Gallery images
+Customer review photos
+
+Use:
+
+werkzeug.utils.secure_filename
+
+Save uploaded images to:
+
+static/uploads/
+
+---
+
+FRONTEND SPECIFICATIONS
+
+Use Bootstrap 5 CDN in base.html.
+
+Pages must extend base template using Jinja2:
+
+{% extends "base.html" %}
+
+{% block content %}
+{% endblock %}
+
+---
+
+NAVIGATION ROUTING
+
+Use Flask routing names such as:
+
+href="{{ url_for('index') }}"
+href="{{ url_for('rooms') }}"
+href="{{ url_for('gallery') }}"
+href="{{ url_for('experiences') }}"
+href="{{ url_for('contact') }}"
+
+---
+
+WEATHER FEATURE
+
+Fetch weather data using JavaScript in:
+
+static/js/main.js
+
+API endpoint:
+
+https://api.open-meteo.com/v1/forecast
+
+Coordinates of homestay:
+
+Latitude: 30.1326
+Longitude: 78.3240
+
+Display current temperature and weather condition on homepage.
+
+---
+
+MAP FEATURE
+
+Create a View Location popup using Bootstrap Modal or Offcanvas.
+
+Embed Google Maps showing the homestay location.
+
+---
+
+DYNAMIC CONTENT RULE
+
+The following pages must load content from MySQL database using Jinja loops:
+
+rooms.html
+gallery.html
+experiences.html
+reviews section
+
+Example loop:
+
+{% for room in rooms %}
+
+---
+
+CONTACT DETAILS (NO PLACEHOLDERS)
+
+Phone: +91 8057315607
+Email: shailendr07@gmail.com
+Location: Narendra Nagar, Rishikesh, Uttarakhand
+
+These details must appear in the footer and contact page.
+
+---
+
+WEBSITE FEATURES
+
+Homepage
+Hero banner
+Quick booking form
+Weather widget
+Homestay introduction
+Featured rooms
+
+Rooms Page
+Room cards
+Room images
+Room price
+Room description
+
+Gallery Page
+Image grid layout
+Images loaded from database
+
+Experiences Page
+Nearby places including:
+
+Kunjapuri Temple
+Neer Waterfall
+Shivpuri rafting
+Sunrise viewpoints
+
+Contact Page
+Contact form
+Map popup
+Phone and email display
+
+---
+
+ADMIN DASHBOARD FEATURES
+
+Admin must be able to:
+
+Add rooms
+Edit rooms
+Delete rooms
+Upload room images
+
+Upload gallery images
+Delete gallery images
+
+Add customer reviews
+Upload review photos
+
+View booking requests
+
+Change homestay images and homepage content.
+
+---
+
+REQUIREMENTS.TXT
+
+Must include:
+
+Flask
+Flask-SQLAlchemy
+Flask-Login
+mysql-connector-python
+Werkzeug
+
+---
+
+DESIGN RULES
+
+Use Bootstrap components only:
+
+Navbar
+Cards
+Grid layout
+Carousel
+Modal
+Offcanvas
+
+Do NOT use Tailwind.
+
+---
+
+FINAL GOAL
+
+Generate a fully working Flask homestay website with:
+
+MySQL database
+Admin dashboard
+Dynamic rooms
+Dynamic gallery
+Image uploads
+Weather widget
+Map popup
+Booking request system
+
+The project must run with:
+
+python app.py
