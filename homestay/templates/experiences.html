@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Experiences & Activities - Artist Rally Homestay{% endblock %}
+
+{% block content %}
+<section class="page-hero text-center">
+    <div class="container">
+        <div class="section-subtitle text-white mb-2">Explore</div>
+        <h1 class="display-4 fw-bold">Nearby Experiences</h1>
+        <p class="lead opacity-75 mt-2">Discover the beauty and adventure surrounding our homestay</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <p class="text-muted mx-auto" style="max-width: 600px;">From spiritual temples to thrilling river rafting, Narendra Nagar and Rishikesh offer a wealth of experiences for every type of traveler.</p>
+        </div>
+
+        <!-- Experience type filters -->
+        <div class="text-center mb-4">
+            <div class="btn-group flex-wrap" role="group">
+                <button type="button" class="btn btn-outline-secondary exp-filter active" data-filter="all">All</button>
+                <button type="button" class="btn btn-outline-secondary exp-filter" data-filter="adventure">Adventure</button>
+                <button type="button" class="btn btn-outline-secondary exp-filter" data-filter="spiritual">Spiritual</button>
+                <button type="button" class="btn btn-outline-secondary exp-filter" data-filter="nature">Nature</button>
+                <button type="button" class="btn btn-outline-secondary exp-filter" data-filter="culture">Culture</button>
+            </div>
+        </div>
+
+        <div class="row g-4" id="experienceGrid">
+            {% for exp in experiences %}
+            <div class="col-lg-4 col-md-6 fade-in exp-item" data-category="{{ exp.category }}">
+                <div class="card experience-card h-100">
+                    {% if exp.image %}
+                    <img src="{{ url_for('static', filename=exp.image) }}" class="card-img-top" alt="{{ exp.title }}">
+                    {% else %}
+                    {% set exp_images = {
+                        'Kunjapuri Temple': 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',
+                        'Neer Waterfall': 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80',
+                        'Shivpuri Rafting': 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&q=80',
+                        'Sunrise Viewpoints': 'https://images.unsplash.com/photo-1458668383970-8ddd3927deed?w=600&q=80',
+                        'Laxman Jhula': 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=600&q=80',
+                        'Beatles Ashram': 'https://images.unsplash.com/photo-1439405326854-014607f694d7?w=600&q=80'
+                    } %}
+                    <img src="{{ exp_images.get(exp.title, 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80') }}"
+                         class="card-img-top" alt="{{ exp.title }}">
+                    {% endif %}
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="exp-category">{{ exp.category|title }}</span>
+                            {% if exp.distance %}
+                            <span class="text-muted small"><i class="bi bi-geo-alt me-1"></i>{{ exp.distance }}</span>
+                            {% endif %}
+                        </div>
+                        <h5 class="card-title fw-bold mt-2">{{ exp.title }}</h5>
+                        <p class="card-text text-muted small lh-lg">{{ exp.description }}</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                        <a href="{{ url_for('contact') }}" class="btn btn-outline-secondary w-100 btn-sm">
+                            <i class="bi bi-calendar-plus me-2"></i>Arrange a Visit
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Map Section -->
+        <div class="mt-5 p-4 rounded-4 bg-light">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h4 style="font-family: 'Playfair Display', serif;">Plan Your Adventure</h4>
+                    <p class="text-muted">All these experiences are easily accessible from our homestay. We can arrange transportation, guides, and customized itineraries for you.</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <a href="{{ url_for('contact') }}" class="btn btn-primary px-4 me-2">Book Now</a>
+                    <button class="btn btn-outline-primary px-4" data-bs-toggle="offcanvas" data-bs-target="#mapOffcanvas">
+                        <i class="bi bi-map me-2"></i>View Map
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% block extra_js %}
+<script>
+document.querySelectorAll('.exp-filter').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.exp-filter').forEach(b => b.classList.remove('active', 'btn-secondary'));
+        document.querySelectorAll('.exp-filter').forEach(b => b.classList.add('btn-outline-secondary'));
+        this.classList.add('active', 'btn-secondary');
+        this.classList.remove('btn-outline-secondary');
+        const filter = this.dataset.filter;
+        document.querySelectorAll('.exp-item').forEach(item => {
+            if (filter === 'all' || item.dataset.category === filter) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
+{% endblock %}

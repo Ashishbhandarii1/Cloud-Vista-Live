@@ -2,7 +2,51 @@
 
 ## Overview
 
-pnpm workspace monorepo using TypeScript. Each package manages its own dependencies.
+This workspace contains a pnpm monorepo (TypeScript) AND a separate Flask Python web application — the **Artist Rally Homestay Website**.
+
+---
+
+## Artist Rally Homestay Website (Flask)
+
+**Location:** `/homestay/`  
+**Run command:** `cd homestay && python3 app.py`  
+**Port:** 5000
+
+### Stack
+- **Backend:** Python Flask + Flask-SQLAlchemy + Flask-Login
+- **Database:** SQLite (default) — switch to MySQL via `FLASK_DATABASE_URL` env var
+- **Frontend:** Bootstrap 5 (CDN), Vanilla JS, Jinja2 templates
+- **File uploads:** Werkzeug secure_filename → `static/uploads/`
+
+### Admin Credentials
+- **URL:** `/admin/login`
+- **Username:** `shailendr07`
+- **Password:** `Cloudvista@shailendra`
+
+### Admin Panel Routes
+- `/admin-panel/dashboard` — Stats and recent bookings
+- `/admin-panel/rooms` — Add/edit/delete rooms + image upload
+- `/admin-panel/gallery` — Upload/delete gallery images
+- `/admin-panel/reviews` — Add/manage guest reviews
+- `/admin-panel/bookings` — View and update booking requests
+
+### Public Pages
+- `/` — Homepage with hero, weather widget, featured rooms, reviews
+- `/rooms` — All room listings from database
+- `/gallery` — Image gallery from database
+- `/experiences` — Nearby places (Kunjapuri Temple, Neer Waterfall, Shivpuri Rafting, etc.)
+- `/contact` — Booking request form + contact info + map popup
+
+### Features
+- Live weather widget via Open-Meteo API (lat: 30.1326, lon: 78.3240)
+- Google Maps location offcanvas popup
+- WhatsApp floating button (+91 8057315607)
+- Scroll fade-in animations
+- Fully responsive Bootstrap 5 design
+
+---
+
+## TypeScript Monorepo (existing)
 
 ## Stack
 

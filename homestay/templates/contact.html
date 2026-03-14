@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% block title %}Contact & Booking - Artist Rally Homestay{% endblock %}
+
+{% block content %}
+<section class="page-hero text-center">
+    <div class="container">
+        <div class="section-subtitle text-white mb-2">Get in Touch</div>
+        <h1 class="display-4 fw-bold">Contact & Book</h1>
+        <p class="lead opacity-75 mt-2">We'd love to host you at Artist Rally Homestay</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container py-4">
+        <div class="row g-5">
+            <!-- Contact Info -->
+            <div class="col-lg-4">
+                <div class="contact-info-card">
+                    <h4 class="mb-4" style="font-family: 'Playfair Display', serif;">Contact Information</h4>
+                    <div class="contact-info-item">
+                        <div class="contact-icon"><i class="bi bi-geo-alt-fill"></i></div>
+                        <div>
+                            <div class="fw-bold">Location</div>
+                            <div class="small opacity-75 mt-1">Narendra Nagar, Rishikesh<br>Uttarakhand, India</div>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="contact-icon"><i class="bi bi-telephone-fill"></i></div>
+                        <div>
+                            <div class="fw-bold">Phone</div>
+                            <a href="tel:+918057315607" class="text-white text-decoration-none opacity-75">+91 8057315607</a>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="contact-icon"><i class="bi bi-envelope-fill"></i></div>
+                        <div>
+                            <div class="fw-bold">Email</div>
+                            <a href="mailto:shailendr07@gmail.com" class="text-white text-decoration-none opacity-75 small">shailendr07@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="contact-icon"><i class="bi bi-clock-fill"></i></div>
+                        <div>
+                            <div class="fw-bold">Check-in / Check-out</div>
+                            <div class="small opacity-75 mt-1">Check-in: 12:00 PM<br>Check-out: 11:00 AM</div>
+                        </div>
+                    </div>
+                    <hr style="border-color: rgba(255,255,255,0.2)">
+                    <button class="btn btn-outline-light w-100 mt-2" data-bs-toggle="offcanvas" data-bs-target="#mapOffcanvas">
+                        <i class="bi bi-map me-2"></i>View on Google Maps
+                    </button>
+                    <div class="d-flex gap-3 mt-4">
+                        <a href="https://wa.me/918057315607" target="_blank" class="text-white fs-5 opacity-75"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" class="text-white fs-5 opacity-75"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white fs-5 opacity-75"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Form -->
+            <div class="col-lg-8">
+                <div class="card contact-form-card p-4 p-md-5">
+                    <h4 class="mb-4" style="font-family: 'Playfair Display', serif;">Send a Booking Request</h4>
+                    <form method="POST" action="{{ url_for('contact') }}">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
+                                <input type="text" name="name" class="form-control" placeholder="Your full name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Email Address <span class="text-danger">*</span></label>
+                                <input type="email" name="email" class="form-control" placeholder="your@email.com" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Phone Number</label>
+                                <input type="tel" name="phone" class="form-control" placeholder="+91 XXXXXXXXXX">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Room Preference</label>
+                                <select name="room_id" class="form-select">
+                                    <option value="">Any available room</option>
+                                    {% for room in rooms %}
+                                    <option value="{{ room.id }}">{{ room.name }} — ₹{{ room.price|int }}/night</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold">Check-in Date</label>
+                                <input type="date" name="check_in" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold">Check-out Date</label>
+                                <input type="date" name="check_out" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold">Number of Guests</label>
+                                <select name="guests" class="form-select">
+                                    <option value="1">1 Guest</option>
+                                    <option value="2" selected>2 Guests</option>
+                                    <option value="3">3 Guests</option>
+                                    <option value="4">4 Guests</option>
+                                    <option value="5">5+ Guests</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Message / Special Requests</label>
+                                <textarea name="message" class="form-control" rows="4" placeholder="Tell us about any special requirements, dietary needs, or questions..."></textarea>
+                            </div>
+                            <div class="col-12 mt-2">
+                                <button type="submit" class="btn btn-primary btn-lg px-5 w-100">
+                                    <i class="bi bi-send-fill me-2"></i>Send Booking Request
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <p class="text-muted small mt-4 mb-0"><i class="bi bi-info-circle me-1"></i>We will respond to your booking request within 2–4 hours. For immediate assistance, please call us at <a href="tel:+918057315607">+91 8057315607</a>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Row -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <h4 class="text-center mb-4" style="font-family: 'Playfair Display', serif;">Frequently Asked Questions</h4>
+            </div>
+            <div class="col-md-6">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item border-0 mb-2 rounded-3 overflow-hidden">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                How far is it from Rishikesh?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted">Narendra Nagar is about 12–15 km from central Rishikesh (Laxman Jhula area). The drive takes approximately 25–30 minutes.</div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0 mb-2 rounded-3 overflow-hidden">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                Do you offer meals?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted">Yes! We offer authentic home-cooked Garhwali meals. Breakfast is included in room tariff. Lunch and dinner can be arranged on request.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="accordion" id="faqAccordion2">
+                    <div class="accordion-item border-0 mb-2 rounded-3 overflow-hidden">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                Is WiFi available?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion2">
+                            <div class="accordion-body text-muted">Yes, complimentary high-speed WiFi is available throughout the property.</div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0 mb-2 rounded-3 overflow-hidden">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                Can you arrange sightseeing?
+                            </button>
+                        </h2>
+                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion2">
+                            <div class="accordion-body text-muted">Absolutely! We can arrange transportation, guides, rafting packages, temple visits, and custom itineraries for our guests.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Rooms - Artist Rally Homestay Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body style="font-family: 'Lato', sans-serif;">
+
+<div class="admin-sidebar d-flex flex-column py-4">
+    <div class="px-4 mb-4">
+        <div style="font-family: 'Playfair Display', serif; color: #fff; font-size: 1.1rem;">
+            <i class="bi bi-house-heart-fill me-2" style="color: #d4a843;"></i>Artist Rally
+        </div>
+        <div class="small" style="color: #aaa;">Admin Panel</div>
+    </div>
+    <nav class="nav flex-column flex-grow-1">
+        <a href="{{ url_for('admin_dashboard') }}" class="nav-link"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+        <a href="{{ url_for('admin_rooms') }}" class="nav-link active"><i class="bi bi-door-open me-2"></i>Rooms</a>
+        <a href="{{ url_for('admin_gallery') }}" class="nav-link"><i class="bi bi-images me-2"></i>Gallery</a>
+        <a href="{{ url_for('admin_reviews') }}" class="nav-link"><i class="bi bi-star me-2"></i>Reviews</a>
+        <a href="{{ url_for('admin_bookings') }}" class="nav-link"><i class="bi bi-calendar-check me-2"></i>Bookings</a>
+    </nav>
+    <div class="px-4 mt-auto">
+        <hr style="border-color: rgba(255,255,255,0.1)">
+        <a href="{{ url_for('index') }}" class="nav-link small" style="color: #aaa; padding: 8px 0 !important; margin: 0 !important;"><i class="bi bi-box-arrow-left me-2"></i>View Website</a>
+        <a href="{{ url_for('admin_logout') }}" class="nav-link small" style="color: #ff6b6b; padding: 8px 0 !important; margin: 0 !important;"><i class="bi bi-power me-2"></i>Logout</a>
+    </div>
+</div>
+
+<div class="admin-content">
+    <div class="admin-topbar">
+        <h5 class="mb-0 fw-bold">Manage Rooms</h5>
+    </div>
+    <div class="p-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}{% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show">{{ message }}<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+            {% endfor %}{% endif %}
+        {% endwith %}
+
+        <div class="row g-4">
+            <!-- Add/Edit Room Form -->
+            <div class="col-lg-4">
+                <div class="card border-0 rounded-4 shadow-sm">
+                    <div class="card-header bg-white border-0 pt-4 px-4">
+                        <h6 class="fw-bold mb-0">{% if edit_room %}Edit Room{% else %}Add New Room{% endif %}</h6>
+                    </div>
+                    <div class="card-body px-4 pb-4">
+                        <form method="POST" enctype="multipart/form-data"
+                              action="{% if edit_room %}{{ url_for('admin_edit_room', room_id=edit_room.id) }}{% else %}{{ url_for('admin_rooms') }}{% endif %}">
+                            <div class="mb-3">
+                                <label class="form-label small fw-semibold">Room Name</label>
+                                <input type="text" name="name" class="form-control form-control-sm" value="{{ edit_room.name if edit_room else '' }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label small fw-semibold">Description</label>
+                                <textarea name="description" class="form-control form-control-sm" rows="3" required>{{ edit_room.description if edit_room else '' }}</textarea>
+                            </div>
+                            <div class="row g-2 mb-3">
+                                <div class="col-6">
+                                    <label class="form-label small fw-semibold">Price/Night (₹)</label>
+                                    <input type="number" name="price" class="form-control form-control-sm" value="{{ edit_room.price|int if edit_room else '' }}" required>
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label small fw-semibold">Capacity</label>
+                                    <input type="number" name="capacity" class="form-control form-control-sm" value="{{ edit_room.capacity if edit_room else 2 }}" min="1">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label small fw-semibold">Amenities (comma-separated)</label>
+                                <input type="text" name="amenities" class="form-control form-control-sm" value="{{ edit_room.amenities if edit_room else '' }}" placeholder="WiFi, AC, Hot Water...">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label small fw-semibold">Room Photo</label>
+                                <input type="file" name="image" class="form-control form-control-sm" accept="image/*">
+                                {% if edit_room and edit_room.image %}
+                                <div class="mt-2"><img src="{{ url_for('static', filename=edit_room.image) }}" class="img-fluid rounded" style="max-height: 80px;"></div>
+                                {% endif %}
+                            </div>
+                            <div class="form-check mb-3">
+                                <input type="checkbox" name="available" class="form-check-input" id="availableCheck" {% if not edit_room or edit_room.available %}checked{% endif %}>
+                                <label class="form-check-label small" for="availableCheck">Room Available</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 btn-sm">
+                                <i class="bi bi-{% if edit_room %}check-circle{% else %}plus-circle{% endif %} me-2"></i>{% if edit_room %}Update Room{% else %}Add Room{% endif %}
+                            </button>
+                            {% if edit_room %}
+                            <a href="{{ url_for('admin_rooms') }}" class="btn btn-outline-secondary w-100 btn-sm mt-2">Cancel</a>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rooms List -->
+            <div class="col-lg-8">
+                <div class="card border-0 rounded-4 shadow-sm">
+                    <div class="card-header bg-white border-0 pt-4 px-4">
+                        <h6 class="fw-bold mb-0">All Rooms ({{ rooms|length }})</h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="px-4 py-3">Room</th>
+                                        <th>Price</th>
+                                        <th>Capacity</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for room in rooms %}
+                                    <tr>
+                                        <td class="px-4 py-3">
+                                            <div class="d-flex align-items-center gap-3">
+                                                {% if room.image %}
+                                                <img src="{{ url_for('static', filename=room.image) }}" class="rounded" style="width: 48px; height: 36px; object-fit: cover;">
+                                                {% else %}
+                                                <div class="rounded bg-light d-flex align-items-center justify-content-center" style="width: 48px; height: 36px;"><i class="bi bi-house text-muted"></i></div>
+                                                {% endif %}
+                                                <div class="fw-semibold small">{{ room.name }}</div>
+                                            </div>
+                                        </td>
+                                        <td class="small fw-bold" style="color: #2c5f2e;">₹{{ room.price|int }}</td>
+                                        <td class="small"><i class="bi bi-people me-1 text-muted"></i>{{ room.capacity }}</td>
+                                        <td>
+                                            {% if room.available %}
+                                            <span class="badge bg-success">Available</span>
+                                            {% else %}
+                                            <span class="badge bg-secondary">Unavailable</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <div class="d-flex gap-1">
+                                                <a href="{{ url_for('admin_edit_room', room_id=room.id) }}" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>
+                                                <form method="POST" action="{{ url_for('admin_delete_room', room_id=room.id) }}" onsubmit="return confirm('Delete this room?')">
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% else %}
+                                    <tr><td colspan="5" class="text-center text-muted py-5">No rooms added yet.</td></tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

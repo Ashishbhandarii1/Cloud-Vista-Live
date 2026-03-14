@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Reviews - Artist Rally Homestay Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body style="font-family: 'Lato', sans-serif;">
+
+<div class="admin-sidebar d-flex flex-column py-4">
+    <div class="px-4 mb-4">
+        <div style="font-family: 'Playfair Display', serif; color: #fff; font-size: 1.1rem;">
+            <i class="bi bi-house-heart-fill me-2" style="color: #d4a843;"></i>Artist Rally
+        </div>
+        <div class="small" style="color: #aaa;">Admin Panel</div>
+    </div>
+    <nav class="nav flex-column flex-grow-1">
+        <a href="{{ url_for('admin_dashboard') }}" class="nav-link"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+        <a href="{{ url_for('admin_rooms') }}" class="nav-link"><i class="bi bi-door-open me-2"></i>Rooms</a>
+        <a href="{{ url_for('admin_gallery') }}" class="nav-link"><i class="bi bi-images me-2"></i>Gallery</a>
+        <a href="{{ url_for('admin_reviews') }}" class="nav-link active"><i class="bi bi-star me-2"></i>Reviews</a>
+        <a href="{{ url_for('admin_bookings') }}" class="nav-link"><i class="bi bi-calendar-check me-2"></i>Bookings</a>
+    </nav>
+    <div class="px-4 mt-auto">
+        <hr style="border-color: rgba(255,255,255,0.1)">
+        <a href="{{ url_for('index') }}" class="nav-link small" style="color: #aaa; padding: 8px 0 !important; margin: 0 !important;"><i class="bi bi-box-arrow-left me-2"></i>View Website</a>
+        <a href="{{ url_for('admin_logout') }}" class="nav-link small" style="color: #ff6b6b; padding: 8px 0 !important; margin: 0 !important;"><i class="bi bi-power me-2"></i>Logout</a>
+    </div>
+</div>
+
+<div class="admin-content">
+    <div class="admin-topbar"><h5 class="mb-0 fw-bold">Manage Reviews</h5></div>
+    <div class="p-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}{% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show">{{ message }}<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+            {% endfor %}{% endif %}
+        {% endwith %}
+
+        <div class="row g-4">
+            <!-- Add Review Form -->
+            <div class="col-lg-4">
+                <div class="card border-0 rounded-4 shadow-sm">
+                    <div class="card-header bg-white border-0 pt-4 px-4"><h6 class="fw-bold mb-0">Add Review</h6></div>
+                    <div class="card-body px-4 pb-4">
+                        <form method="POST" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label class="form-label small fw-semibold">Guest Name</label>
+                                <input type="text" name="guest_name" class="form-control form-control-sm" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label small fw-semibold">Rating</label>
+                                <select name="rating" class="form-select form-select-sm">
+                                    <option value="5">5 Stars ★★★★★</option>
+                                    <option value="4">4 Stars ★★★★</option>
+                                    <option value="3">3 Stars ★★★</option>
+                                    <option value="2">2 Stars ★★</option>
+                                    <option value="1">1 Star ★</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label small fw-semibold">Review Comment</label>
+                                <textarea name="comment" class="form-control form-control-sm" rows="4" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label small fw-semibold">Guest Photo (optional)</label>
+                                <input type="file" name="photo" class="form-control form-control-sm" accept="image/*">
+                            </div>
+                            <div class="form-check mb-3">
+                                <input type="checkbox" name="approved" class="form-check-input" id="approvedCheck" checked>
+                                <label class="form-check-label small" for="approvedCheck">Show on website</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 btn-sm">
+                                <i class="bi bi-plus-circle me-2"></i>Add Review
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reviews List -->
+            <div class="col-lg-8">
+                <div class="card border-0 rounded-4 shadow-sm">
+                    <div class="card-header bg-white border-0 pt-4 px-4">
+                        <h6 class="fw-bold mb-0">All Reviews ({{ reviews|length }})</h6>
+                    </div>
+                    <div class="card-body p-4">
+                        {% if reviews %}
+                        <div class="row g-3">
+                            {% for review in reviews %}
+                            <div class="col-12">
+                                <div class="d-flex gap-3 p-3 rounded-3 border" style="{% if review.approved %}background: #f9fff9;{% else %}background: #fff8f8;{% endif %}">
+                                    {% if review.photo %}
+                                    <img src="{{ url_for('static', filename=review.photo) }}" class="rounded-circle flex-shrink-0" style="width: 44px; height: 44px; object-fit: cover;">
+                                    {% else %}
+                                    <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center flex-shrink-0 text-white fw-bold" style="width: 44px; height: 44px;">{{ review.guest_name[0] }}</div>
+                                    {% endif %}
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <div class="fw-semibold small">{{ review.guest_name }}</div>
+                                                <div style="color: #d4a843; font-size: 0.8rem;">{% for i in range(review.rating) %}★{% endfor %}</div>
+                                            </div>
+                                            <div class="d-flex gap-1">
+                                                <form method="POST" action="{{ url_for('admin_toggle_review', review_id=review.id) }}">
+                                                    <button type="submit" class="btn btn-sm btn-outline-{{ 'warning' if review.approved else 'success' }} py-0 px-2" style="font-size: 0.75rem;">
+                                                        {{ 'Hide' if review.approved else 'Show' }}
+                                                    </button>
+                                                </form>
+                                                <form method="POST" action="{{ url_for('admin_delete_review', review_id=review.id) }}" onsubmit="return confirm('Delete this review?')">
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger py-0 px-2"><i class="bi bi-trash" style="font-size: 0.75rem;"></i></button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <p class="small text-muted mb-0 mt-1">{{ review.comment }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="text-center py-5">
+                            <i class="bi bi-star fs-1 text-muted"></i>
+                            <p class="text-muted mt-3">No reviews yet. Add the first review above.</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Artist Rally Homestay</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body style="font-family: 'Lato', sans-serif;">
+
+<!-- Sidebar -->
+<div class="admin-sidebar d-flex flex-column py-4">
+    <div class="px-4 mb-4">
+        <div style="font-family: 'Playfair Display', serif; color: #fff; font-size: 1.1rem;">
+            <i class="bi bi-house-heart-fill me-2" style="color: #d4a843;"></i>Artist Rally
+        </div>
+        <div class="small" style="color: #aaa;">Admin Panel</div>
+    </div>
+    <nav class="nav flex-column flex-grow-1">
+        <a href="{{ url_for('admin_dashboard') }}" class="nav-link {% if not show_bookings %}active{% endif %}">
+            <i class="bi bi-speedometer2 me-2"></i>Dashboard
+        </a>
+        <a href="{{ url_for('admin_rooms') }}" class="nav-link">
+            <i class="bi bi-door-open me-2"></i>Rooms
+        </a>
+        <a href="{{ url_for('admin_gallery') }}" class="nav-link">
+            <i class="bi bi-images me-2"></i>Gallery
+        </a>
+        <a href="{{ url_for('admin_reviews') }}" class="nav-link">
+            <i class="bi bi-star me-2"></i>Reviews
+        </a>
+        <a href="{{ url_for('admin_bookings') }}" class="nav-link {% if show_bookings %}active{% endif %}">
+            <i class="bi bi-calendar-check me-2"></i>Bookings
+        </a>
+    </nav>
+    <div class="px-4 mt-auto">
+        <hr style="border-color: rgba(255,255,255,0.1)">
+        <a href="{{ url_for('index') }}" class="nav-link small" style="color: #aaa; padding: 8px 0 !important; margin: 0 !important;">
+            <i class="bi bi-box-arrow-left me-2"></i>View Website
+        </a>
+        <a href="{{ url_for('admin_logout') }}" class="nav-link small" style="color: #ff6b6b; padding: 8px 0 !important; margin: 0 !important;">
+            <i class="bi bi-power me-2"></i>Logout
+        </a>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="admin-content">
+    <div class="admin-topbar d-flex align-items-center justify-content-between">
+        <div>
+            <h5 class="mb-0 fw-bold">{% if show_bookings %}Booking Requests{% else %}Dashboard{% endif %}</h5>
+            <div class="text-muted small">Artist Rally Homestay Admin</div>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <span class="badge bg-success"><i class="bi bi-circle-fill me-1" style="font-size: 0.5rem;"></i>Online</span>
+            <div class="text-muted small">shailendr07</div>
+        </div>
+    </div>
+
+    <div class="p-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% if not show_bookings %}
+        <!-- Stats Cards -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-3 col-sm-6">
+                <div class="card stat-card">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <div class="text-muted small mb-1">Total Rooms</div>
+                                <div class="fw-bold fs-2">{{ rooms_count }}</div>
+                            </div>
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #2c5f2e, #4a8f4c)">
+                                <i class="bi bi-door-open"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card stat-card">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <div class="text-muted small mb-1">Gallery Images</div>
+                                <div class="fw-bold fs-2">{{ gallery_count }}</div>
+                            </div>
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #6f42c1, #9262d4)">
+                                <i class="bi bi-images"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card stat-card">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <div class="text-muted small mb-1">Reviews</div>
+                                <div class="fw-bold fs-2">{{ reviews_count }}</div>
+                            </div>
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #d4a843, #b8911e)">
+                                <i class="bi bi-star-fill"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card stat-card">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <div class="text-muted small mb-1">Bookings</div>
+                                <div class="fw-bold fs-2">{{ bookings_count }}</div>
+                            </div>
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #dc3545, #ff6b6b)">
+                                <i class="bi bi-calendar-check"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="row g-3 mb-5">
+            <div class="col-md-4">
+                <a href="{{ url_for('admin_rooms') }}" class="card border-0 p-3 text-decoration-none hover-shadow" style="background: #f0f7f0; border-radius: 12px; display: block;">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="stat-icon" style="background: #2c5f2e; width: 44px; height: 44px; font-size: 1.1rem; border-radius: 10px;">
+                            <i class="bi bi-plus-circle"></i>
+                        </div>
+                        <div>
+                            <div class="fw-bold text-dark">Add Room</div>
+                            <div class="text-muted small">Manage room listings</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{{ url_for('admin_gallery') }}" class="card border-0 p-3 text-decoration-none hover-shadow" style="background: #f3f0f9; border-radius: 12px; display: block;">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="stat-icon" style="background: #6f42c1; width: 44px; height: 44px; font-size: 1.1rem; border-radius: 10px;">
+                            <i class="bi bi-upload"></i>
+                        </div>
+                        <div>
+                            <div class="fw-bold text-dark">Upload Photos</div>
+                            <div class="text-muted small">Manage gallery</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{{ url_for('admin_reviews') }}" class="card border-0 p-3 text-decoration-none hover-shadow" style="background: #fdf8ec; border-radius: 12px; display: block;">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="stat-icon" style="background: #d4a843; width: 44px; height: 44px; font-size: 1.1rem; border-radius: 10px;">
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <div>
+                            <div class="fw-bold text-dark">Add Review</div>
+                            <div class="text-muted small">Manage guest reviews</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Bookings Table -->
+        <div class="card border-0 rounded-4 shadow-sm">
+            <div class="card-header bg-white border-0 pt-4 px-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h6 class="fw-bold mb-0">{% if show_bookings %}All Booking Requests{% else %}Recent Booking Requests{% endif %}</h6>
+                    {% if not show_bookings %}
+                    <a href="{{ url_for('admin_bookings') }}" class="btn btn-sm btn-outline-secondary">View All</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="px-4 py-3">Guest</th>
+                                <th>Email / Phone</th>
+                                <th>Dates</th>
+                                <th>Room</th>
+                                <th>Status</th>
+                                {% if show_bookings %}<th>Action</th>{% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for booking in recent_bookings %}
+                            <tr>
+                                <td class="px-4 py-3">
+                                    <div class="fw-semibold">{{ booking.name }}</div>
+                                    <div class="text-muted small">{{ booking.guests }} guest(s)</div>
+                                </td>
+                                <td>
+                                    <div class="small">{{ booking.email }}</div>
+                                    <div class="text-muted small">{{ booking.phone or '—' }}</div>
+                                </td>
+                                <td class="small">
+                                    {% if booking.check_in %}
+                                    {{ booking.check_in.strftime('%d %b') }} → {{ booking.check_out.strftime('%d %b %Y') if booking.check_out else '?' }}
+                                    {% else %}—{% endif %}
+                                </td>
+                                <td class="small">{{ booking.room.name if booking.room else 'Any' }}</td>
+                                <td>
+                                    {% if booking.status == 'confirmed' %}
+                                        <span class="badge bg-success">Confirmed</span>
+                                    {% elif booking.status == 'cancelled' %}
+                                        <span class="badge bg-danger">Cancelled</span>
+                                    {% else %}
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                    {% endif %}
+                                </td>
+                                {% if show_bookings %}
+                                <td>
+                                    <form method="POST" action="{{ url_for('admin_update_booking', booking_id=booking.id) }}" class="d-flex gap-1">
+                                        <select name="status" class="form-select form-select-sm" style="width: auto;">
+                                            <option value="pending" {% if booking.status=='pending' %}selected{% endif %}>Pending</option>
+                                            <option value="confirmed" {% if booking.status=='confirmed' %}selected{% endif %}>Confirmed</option>
+                                            <option value="cancelled" {% if booking.status=='cancelled' %}selected{% endif %}>Cancelled</option>
+                                        </select>
+                                        <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                                    </form>
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% else %}
+                            <tr><td colspan="6" class="text-center text-muted py-5">No booking requests yet.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

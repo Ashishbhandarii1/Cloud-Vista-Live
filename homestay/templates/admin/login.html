@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Artist Rally Homestay</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg, #1a3d1b, #2c5f2e); min-height: 100vh; display: flex; align-items: center; font-family: 'Lato', sans-serif; }
+        .login-card { border: none; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .login-logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #2c5f2e; }
+        .btn-primary { background: #2c5f2e; border-color: #2c5f2e; }
+        .btn-primary:hover { background: #4a8f4c; border-color: #4a8f4c; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-5 col-lg-4">
+            <div class="card login-card p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <div class="mb-3" style="font-size: 3rem; color: #2c5f2e;"><i class="bi bi-house-heart-fill"></i></div>
+                    <div class="login-logo">Artist Rally Homestay</div>
+                    <p class="text-muted small mt-1">Admin Panel</p>
+                </div>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} py-2 small">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-person-fill text-muted"></i></span>
+                            <input type="text" name="username" class="form-control" placeholder="Enter username" required autofocus>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold small">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-lock-fill text-muted"></i></span>
+                            <input type="password" name="password" class="form-control" placeholder="Enter password" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                    </button>
+                </form>
+                <div class="text-center mt-4">
+                    <a href="/" class="text-muted small text-decoration-none"><i class="bi bi-arrow-left me-1"></i>Back to Website</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

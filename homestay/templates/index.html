@@ -1,0 +1,307 @@
+{% extends "base.html" %}
+{% block title %}Artist Rally Homestay - Home | Narendra Nagar, Rishikesh{% endblock %}
+
+{% block content %}
+<!-- HERO -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center hero-content">
+            <div class="col-lg-7">
+                <span class="badge-location d-inline-block mb-4">
+                    <i class="bi bi-geo-alt-fill me-1"></i> Narendra Nagar, Rishikesh, Uttarakhand
+                </span>
+                <h1 class="hero-title">Welcome to<br>Artist Rally<br><span style="color: var(--accent)">Homestay</span></h1>
+                <p class="hero-subtitle mt-4 mb-5">Experience authentic Garhwali hospitality in the lap of the Himalayas. Wake up to breathtaking mountain views and the sound of the Ganges.</p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{{ url_for('rooms') }}" class="btn btn-accent btn-lg px-5 py-3">
+                        <i class="bi bi-door-open me-2"></i>Explore Rooms
+                    </a>
+                    <button class="btn btn-outline-light btn-lg px-5 py-3" data-bs-toggle="offcanvas" data-bs-target="#mapOffcanvas">
+                        <i class="bi bi-map me-2"></i>View Location
+                    </button>
+                </div>
+                <div class="d-flex gap-4 mt-5">
+                    <div class="text-white">
+                        <div class="fw-bold fs-4" style="color: var(--accent)">500+</div>
+                        <div class="small opacity-75">Happy Guests</div>
+                    </div>
+                    <div class="text-white">
+                        <div class="fw-bold fs-4" style="color: var(--accent)">4.9★</div>
+                        <div class="small opacity-75">Average Rating</div>
+                    </div>
+                    <div class="text-white">
+                        <div class="fw-bold fs-4" style="color: var(--accent)">8+</div>
+                        <div class="small opacity-75">Years of Hospitality</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 mt-5 mt-lg-0">
+                <!-- Weather Widget -->
+                <div class="weather-widget" id="weatherWidget">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div>
+                            <div class="small opacity-75 mb-1"><i class="bi bi-geo-alt me-1"></i>Narendra Nagar, Rishikesh</div>
+                            <div class="weather-temp" id="weatherTemp">--°C</div>
+                            <div class="mt-1" id="weatherDesc">Loading weather...</div>
+                            <div class="small opacity-75 mt-2" id="weatherDetails"></div>
+                        </div>
+                        <div class="weather-icon" id="weatherIcon">
+                            <i class="bi bi-cloud-sun"></i>
+                        </div>
+                    </div>
+                    <hr style="border-color: rgba(255,255,255,0.2)">
+                    <div class="row text-center" id="weatherExtra">
+                        <div class="col-4">
+                            <div class="small opacity-75">Humidity</div>
+                            <div class="fw-bold" id="weatherHumidity">--</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="small opacity-75">Wind</div>
+                            <div class="fw-bold" id="weatherWind">--</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="small opacity-75">Feels Like</div>
+                            <div class="fw-bold" id="weatherFeelsLike">--°C</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hero-scroll-hint text-white opacity-75">
+        <i class="bi bi-chevron-double-down fs-4"></i>
+    </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="py-5 bg-light-green">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <div class="section-subtitle">Why Choose Us</div>
+            <h2 class="section-title mt-2">The Artist Rally Experience</h2>
+            <div class="section-divider mt-3"></div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-3 col-sm-6 fade-in">
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="bi bi-mountains"></i></div>
+                    <h5 class="fw-bold">Mountain Views</h5>
+                    <p class="text-muted small">Wake up to panoramic Himalayan views every morning from your room.</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 fade-in">
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="bi bi-heart-fill"></i></div>
+                    <h5 class="fw-bold">Local Hospitality</h5>
+                    <p class="text-muted small">Experience authentic Garhwali warmth and traditional home-cooked meals.</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 fade-in">
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="bi bi-geo-alt-fill"></i></div>
+                    <h5 class="fw-bold">Prime Location</h5>
+                    <p class="text-muted small">Situated in peaceful Narendra Nagar, minutes from Rishikesh attractions.</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 fade-in">
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="bi bi-shield-check-fill"></i></div>
+                    <h5 class="fw-bold">Safe & Clean</h5>
+                    <p class="text-muted small">Hygienic, well-maintained rooms with all modern amenities.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- QUICK BOOKING -->
+<section class="booking-section">
+    <div class="container">
+        <div class="booking-card">
+            <div class="row align-items-center">
+                <div class="col-lg-3 mb-4 mb-lg-0">
+                    <h3 class="text-white mb-2" style="font-family: 'Playfair Display', serif;">Quick Booking</h3>
+                    <p class="text-white opacity-75 mb-0 small">Reserve your stay in minutes</p>
+                </div>
+                <div class="col-lg-9">
+                    <form action="{{ url_for('contact') }}" method="GET">
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <label>Check-in Date</label>
+                                <input type="date" name="check_in" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label>Check-out Date</label>
+                                <input type="date" name="check_out" class="form-control">
+                            </div>
+                            <div class="col-md-2">
+                                <label>Guests</label>
+                                <select name="guests" class="form-select">
+                                    <option>1</option>
+                                    <option selected>2</option>
+                                    <option>3</option>
+                                    <option>4+</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 d-flex align-items-end">
+                                <button type="submit" class="btn btn-accent w-100 py-2">
+                                    <i class="bi bi-search me-2"></i>Check Availability
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURED ROOMS -->
+<section class="py-5">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <div class="section-subtitle">Accommodation</div>
+            <h2 class="section-title mt-2">Featured Rooms</h2>
+            <div class="section-divider mt-3"></div>
+            <p class="text-muted mt-3 mx-auto" style="max-width: 500px;">Choose from our thoughtfully designed rooms offering comfort, character, and stunning views.</p>
+        </div>
+        <div class="row g-4">
+            {% for room in featured_rooms %}
+            <div class="col-lg-4 col-md-6 fade-in">
+                <div class="card room-card h-100">
+                    <div class="position-relative">
+                        {% if room.image %}
+                        <img src="{{ url_for('static', filename=room.image) }}" class="card-img-top" alt="{{ room.name }}">
+                        {% else %}
+                        <div class="card-img-top img-placeholder" style="height: 220px;">
+                            <i class="bi bi-house-door-fill"></i>
+                        </div>
+                        {% endif %}
+                        <span class="price-badge">₹{{ room.price|int }}/night</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                            <i class="bi bi-people-fill text-muted small"></i>
+                            <span class="text-muted small">Up to {{ room.capacity }} guests</span>
+                        </div>
+                        <h5 class="card-title fw-bold mt-2">{{ room.name }}</h5>
+                        <p class="card-text text-muted small">{{ room.description[:100] }}...</p>
+                        {% if room.amenities %}
+                        <div class="d-flex flex-wrap gap-1 mt-3">
+                            {% for amenity in room.amenities.split(',')[:3] %}
+                            <span class="amenity-tag">{{ amenity.strip() }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        <a href="{{ url_for('contact') }}" class="btn btn-primary w-100 mt-4">
+                            <i class="bi bi-calendar-check me-2"></i>Book This Room
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-5">
+            <a href="{{ url_for('rooms') }}" class="btn btn-outline-secondary px-5">View All Rooms <i class="bi bi-arrow-right ms-2"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section class="py-5 bg-cream">
+    <div class="container py-4">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?w=600&q=80" class="img-fluid rounded-4 shadow" alt="Homestay">
+                    </div>
+                    <div class="col-6 pt-5">
+                        <img src="https://images.unsplash.com/photo-1458668383970-8ddd3927deed?w=600&q=80" class="img-fluid rounded-4 shadow" alt="Mountains">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="section-subtitle">About Us</div>
+                <h2 class="section-title mt-2">A Home Away From Home</h2>
+                <div class="section-divider ms-0 mt-3"></div>
+                <p class="text-muted mt-4 lh-lg">Nestled in the tranquil hills of Narendra Nagar, Artist Rally Homestay offers an authentic mountain experience just minutes from the spiritual heart of Rishikesh. Our family has been welcoming guests for over 8 years, sharing our culture, cuisine, and love for these magnificent mountains.</p>
+                <p class="text-muted lh-lg">Whether you're seeking adventure along the Ganges, spiritual solace at ancient temples, or simply a peaceful retreat, we provide the perfect base for your Himalayan journey.</p>
+                <div class="row g-3 mt-3">
+                    <div class="col-6">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="feature-icon" style="width: 44px; height: 44px; font-size: 1.2rem; flex-shrink: 0;">
+                                <i class="bi bi-cup-hot-fill"></i>
+                            </div>
+                            <div>
+                                <div class="fw-bold small">Home-cooked Meals</div>
+                                <div class="text-muted" style="font-size: 0.8rem">Traditional Garhwali cuisine</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="feature-icon" style="width: 44px; height: 44px; font-size: 1.2rem; flex-shrink: 0;">
+                                <i class="bi bi-wifi"></i>
+                            </div>
+                            <div>
+                                <div class="fw-bold small">Free WiFi</div>
+                                <div class="text-muted" style="font-size: 0.8rem">High-speed internet</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ url_for('contact') }}" class="btn btn-primary mt-4 px-5">Get in Touch</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- REVIEWS -->
+{% if reviews %}
+<section class="py-5">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <div class="section-subtitle">Testimonials</div>
+            <h2 class="section-title mt-2">What Our Guests Say</h2>
+            <div class="section-divider mt-3"></div>
+        </div>
+        <div class="row g-4">
+            {% for review in reviews %}
+            <div class="col-lg-4 col-md-6 fade-in">
+                <div class="review-card h-100">
+                    <div class="stars mb-3">
+                        {% for i in range(review.rating) %}★{% endfor %}
+                    </div>
+                    <p class="text-muted lh-lg">"{{ review.comment }}"</p>
+                    <div class="d-flex align-items-center gap-3 mt-auto pt-3 border-top">
+                        {% if review.photo %}
+                        <img src="{{ url_for('static', filename=review.photo) }}" class="review-avatar" alt="{{ review.guest_name }}">
+                        {% else %}
+                        <div class="review-avatar-placeholder">{{ review.guest_name[0] }}</div>
+                        {% endif %}
+                        <div>
+                            <div class="fw-bold">{{ review.guest_name }}</div>
+                            <div class="text-muted small">Verified Guest</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA BANNER -->
+<section class="py-5" style="background: linear-gradient(135deg, #1a3d1b 0%, var(--primary) 100%);">
+    <div class="container text-center py-4">
+        <h2 class="text-white mb-3" style="font-family: 'Playfair Display', serif; font-size: 2.5rem;">Ready for Your Mountain Getaway?</h2>
+        <p class="text-white opacity-75 mb-5">Book directly with us for the best rates and personalised service.</p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="{{ url_for('contact') }}" class="btn btn-accent btn-lg px-5">Book Now</a>
+            <a href="tel:+918057315607" class="btn btn-outline-light btn-lg px-5"><i class="bi bi-telephone me-2"></i>Call Us</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
