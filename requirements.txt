@@ -1,6 +1,6 @@
 Flask
 Flask-SQLAlchemy
 Flask-Login
-PyMySQL
+mysql-connector-python
 Werkzeug
-cryptography
+PyMySQL
